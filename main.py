@@ -46,11 +46,11 @@ memory = ConversationBufferMemory()
 
 
 #会話パート何日間行うか
-talk_days = 3 
+talk_days = 5
 #5日間の会話パート
 now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 #会話パート開始日
-start_day = "2025-01-10" #仮
+start_day = "2025-01-14" #仮
 start_day_obj = datetime.datetime.strptime(start_day, "%Y-%m-%d")
 # タイムゾーンを付与
 start_day_obj = pytz.timezone('Asia/Tokyo').localize(start_day_obj)
