@@ -67,6 +67,10 @@ input_style = '''
   .stTextArea {
     position: fixed;
     bottom: 6rem;
+    max-width: 570px;
+    min-width: 300px;
+    left: 50%; /* 左端をページの中央に */
+    transform: translateX(-50%); /* 要素の幅の半分だけ左に移動して完全に中央に */
   }
   .stButton {
     position: fixed;
