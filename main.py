@@ -165,7 +165,7 @@ def show_messages():
     if message["role"] == "Human":
       st.markdown(f'''
       <div style="display: flex;">
-        <div style="display: flex; margin-left: auto; max-width: 60%;">
+        <div style="display: flex; margin-left: auto; max-width: 65%;">
           <div class="messages">{message["content"]}</div>
         </div>
       </div>
@@ -179,10 +179,10 @@ def show_messages():
       if i != 10 and i == len(st.session_state["messages"]) - 1:
         with st.spinner("応答を生成しています"):
           with st.chat_message(message["role"]):
-            st.markdown(f'<div style="max-width: 70%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="max-width: 80%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
       else:
           with st.chat_message(message["role"]):
-            st.markdown(f'<div style="max-width: 70%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="max-width: 80%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
       
 
 
@@ -211,7 +211,7 @@ def add_data(collection_name, document_id, data):
 #会話完了後の表示
 def display_after_complete():
   if now_day < talk_days:
-    st.markdown('本日の会話は終了です。')
+    st.markdown('<div style="padding-left: 20px;">本日の会話は終了です。</div>', unsafe_allow_html=True)
   else:
     st.markdown(
       f'{talk_days}日間の会話パートは終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_5b4FQikEOMWsjAO?user_id={st.session_state["user_id"]}">こちら</a>をクリックしてアンケートに回答してください。', unsafe_allow_html=True
