@@ -211,10 +211,14 @@ def add_data(collection_name, document_id, data):
 #会話完了後の表示
 def display_after_complete():
   if now_day < talk_days:
-    st.markdown('<div style="padding-left: 20px;">本日の会話は終了です。</div>', unsafe_allow_html=True)
+    st.markdown(
+      f'本日の会話は終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
+      unsafe_allow_html=True
+    )
   else:
     st.markdown(
-      f'{talk_days}日間の会話パートは終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_5b4FQikEOMWsjAO?user_id={st.session_state["user_id"]}">こちら</a>をクリックしてアンケートに回答してください。', unsafe_allow_html=True
+      f'{talk_days}日間の会話パートは終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
+      unsafe_allow_html=True
     )
   st.stop()
 
@@ -222,7 +226,7 @@ def display_after_complete():
 
 #ログイン（実験参加者のid認証）
 if not st.session_state['user_id']:
-  user_id = st.text_input("IDを半角で入力してエンターを押してください")
+  user_id = st.text_input("クラウドワークスIDを入力してエンターを押してください")
   if user_id:
     if user_id in valid_ids:
       st.session_state['user_id'] = user_id
@@ -249,19 +253,15 @@ else:
 if st.session_state['user_id']:
   #今日の日付が開始日よりも前の場合
   if now < start_day_obj:
-    #ビッグファイブのアンケートに回答してない場合は認証させてアンケートリンクを表示する
-    if prompt_bigfive == {}:
-      st.markdown(f'<a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_4N1LfAYkc9TrY8u?user_id={st.session_state["user_id"]}" target="_blank">こちら</a>をクリックしてアンケートに回答してください。', unsafe_allow_html=True)
-    else:
-      st.write(f"会話パートは{start_day_obj.month}月{start_day_obj.day}日15時から開始できます。")
+    st.write(f"会話パートは{start_day_obj.month}月{start_day_obj.day}日正午から開始できます。")
     st.stop()
   #5日間の後の場合
   elif now_day > talk_days:
     st.write(f"{talk_days}日間の会話パートは終了しました。")
     st.stop()
   #今の時間が午後3時よりも前の場合
-  elif now.hour < 15:
-    st.write("会話は本日の15時から開始できます。")
+  elif now.hour < 0:
+    st.write("会話は本日の12時から開始できます。")
     st.stop()
   else:
     st.title(f"会話{now_day}日目")
