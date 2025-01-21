@@ -1,6 +1,16 @@
 #送信後最下部へスクロールするJavascript
 scroll_js = '''
 <script>
+    //スクロール位置を保持
+    window.onload = function() {
+        var savedScrollPosition = sessionStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            var target = parent.document.querySelector('section.st-emotion-cache-bm2z3a');
+            if (target) {
+                target.scrollTop = savedScrollPosition;
+            }
+        }
+    }
     var sendButton = parent.document.querySelector('button[data-testid="stBaseButton-secondary"]');
     if (sendButton) {
         // ボタンのクリックイベントを監視
@@ -11,9 +21,8 @@ scroll_js = '''
             if (target) {
                 // スクロールを最下部に移動
                 target.scrollTop = target.scrollHeight;
-            } else {
-                console.error("スクロール対象が見つかりません");
-            }
+                sessionStorage.setItem('scrollPosition', target.scrollTop);
+            } 
         });
     } 
 </script>

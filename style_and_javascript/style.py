@@ -72,18 +72,18 @@ input_style = '''
     bottom: 0;
     width: 100%;
     background-color: #ffffff;
-    padding: 6rem;
+    padding: 4rem;
   }
   .stTextArea {
     position: fixed;
-    bottom: 6rem;
+    bottom: 4rem;
     max-width: 75%;
     left: 50%; 
     transform: translateX(-50%); /* 要素の幅の半分だけ左に移動して完全に中央に */
   }
   .stButton > button {
     position: fixed;
-    bottom: 3rem;
+    bottom: 1rem;
     left: calc(150px + 60%);
   }
   @media (max-width: 700px) {
