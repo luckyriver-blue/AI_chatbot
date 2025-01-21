@@ -38,6 +38,16 @@ hide_st_style = '''
   header[data-testid="stHeader"] {
       z-index: -1;
   }
+  .block-container {
+      padding-top: 0rem !important;
+  }
+  @media (max-width: 700px) { 
+    .block-container {
+      padding-left: 0rem !important;
+      padding-right: 0rem !important;
+      max-width: 90% !important;
+    }
+  }
 </style>
 '''
 
@@ -62,16 +72,24 @@ input_style = '''
     bottom: 0;
     width: 100%;
     background-color: #ffffff;
-    padding: 5rem;
+    padding: 4rem;
   }
   .stTextArea {
     position: fixed;
-    bottom: 6rem;
+    bottom: 4rem;
+    max-width: 75%;
+    left: 50%; 
+    transform: translateX(-50%); /* 要素の幅の半分だけ左に移動して完全に中央に */
   }
-  .stButton {
+  .stButton > button {
     position: fixed;
-    bottom: 3rem;
-    left: calc(98px + 58.5%);
+    bottom: 1rem;
+    left: calc(150px + 60%);
+  }
+  @media (max-width: 700px) {
+    .stButton > button {
+      left: calc(30px + 68%);
+    }
   }
 </style>
 '''
