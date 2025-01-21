@@ -146,6 +146,7 @@ gpt = ChatOpenAI(
 #上記のプロンプトを用いて、ユーザーの入力に対する応答を取得する関数
 def get_response(history):
   prompt = prompt_template.format(history=history)
+  print(prompt)
   response = gpt.predict(prompt)
   return response
 
