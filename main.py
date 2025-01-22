@@ -167,6 +167,9 @@ def show_messages():
         </div>
       </div>
       ''', unsafe_allow_html=True)
+      #会話終了後
+      if i >= 9:
+        display_after_complete()
       #会話が人間で終わっていたら応答を生成する
       if i == len(messages) - 1:
         with st.chat_message("assistant"):
@@ -178,9 +181,7 @@ def show_messages():
     else:
       with st.chat_message(message["role"]):
         st.markdown(f'<div style="max-width: 80%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
-      #会話終了後
-      if i >= 10:
-        display_after_complete()
+      
 
 
 #送信ボタンが押されたとき
@@ -206,12 +207,12 @@ def add_data(document_id, data):
 def display_after_complete():
   if now_day < talk_days:
     st.markdown(
-      f'本日の会話は終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
+      f'<br>本日の会話は終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
       unsafe_allow_html=True
     )
   else:
     st.markdown(
-      f'{talk_days}日間の会話パートは終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
+      f'<br>{talk_days}日間の会話パートは終了です。<br><a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_23orSJSGkW2uu0e?user_id={st.session_state["user_id"]}&day={now_day}">こちら</a>をクリックして本日の日記を書いてください。',
       unsafe_allow_html=True
     )
   st.stop()
