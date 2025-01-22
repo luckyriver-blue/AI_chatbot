@@ -126,7 +126,7 @@ prompt_template = PromptTemplate(
     Openness: {openness}
 
     ユーザーの性格を参照して、ユーザーにとって最適な会話を心がけてください。
-    適度な問いかけを行って、会話を促進してください。
+    適度な問いかけを行って、会話を促進してください。ただし、会話の番号が9に達した場合、これ以上問いかけをしないでください。
     ユーザーの性格のスコアに直接的に言及しないでください。
     ユーザーのことをユーザーと呼ばないでください。
     200文字以内で回答してください。
@@ -159,7 +159,7 @@ def show_messages():
     add_data(st.session_state['user_id'], {"messages": {f"day{now_day}": {"messages": {"0": {"role": "AI", "content": "今日は何がありましたか？"}}}}})
     messages = read_firebase_talk_data()
   for i, message in enumerate(messages.values()):
-    if message["role"] == "Human":
+    if message["role"] == "User":
       st.markdown(f'''
       <div style="display: flex;">
         <div style="display: flex; margin-left: auto; max-width: 65%;">
@@ -167,9 +167,6 @@ def show_messages():
         </div>
       </div>
       ''', unsafe_allow_html=True)
-      #会話終了後
-      if i >= 9:
-        display_after_complete()
       #会話が人間で終わっていたら応答を生成する
       if i == len(messages) - 1:
         with st.chat_message("assistant"):
@@ -181,6 +178,9 @@ def show_messages():
     else:
       with st.chat_message(message["role"]):
         st.markdown(f'<div style="max-width: 80%;" class="messages">{message["content"]}</div>', unsafe_allow_html=True)
+      #会話終了後
+      if i >= 10:
+        display_after_complete()
       
 
 
@@ -195,7 +195,7 @@ def send_message():
     st.session_state['placeholder'] = ""
     messages = read_firebase_talk_data()
     next_message_id = str(len(messages))
-    add_data(st.session_state['user_id'], {"messages": {f"day{now_day}": {"messages": {next_message_id: {"role": "Human", "content": input}}}}})
+    add_data(st.session_state['user_id'], {"messages": {f"day{now_day}": {"messages": {next_message_id: {"role": "User", "content": input}}}}})
 
 
 # データの追加の関数
