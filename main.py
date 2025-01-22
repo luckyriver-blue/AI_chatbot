@@ -244,7 +244,7 @@ if st.session_state['user_id']:
     st.write(f"{talk_days}日間の会話パートは終了しました。")
     st.stop()
   #今の時間が正午よりも前の場合
-  elif now.hour < 12:
+  elif now.hour < 0:
     st.write("会話は本日の12時から開始できます。")
     st.stop()
   else:
