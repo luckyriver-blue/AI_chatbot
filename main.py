@@ -41,7 +41,7 @@ talk_days = 5
 #5日間の会話パート
 now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 #会話パート開始日
-start_day = "2025-01-22" #仮
+start_day = "2025-01-31" #仮
 start_day_obj = datetime.datetime.strptime(start_day, "%Y-%m-%d")
 # タイムゾーンを付与
 start_day_obj = pytz.timezone('Asia/Tokyo').localize(start_day_obj)
@@ -245,7 +245,7 @@ if st.session_state['user_id']:
     st.write(f"{talk_days}日間の会話パートは終了しました。")
     st.stop()
   #今の時間が正午よりも前の場合
-  elif now.hour < 0:
+  elif now.hour < 12:
     st.write("会話は本日の12時から開始できます。")
     st.stop()
   else:
