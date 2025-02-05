@@ -46,16 +46,15 @@ memory = ConversationBufferMemory()
 
 
 #会話パート何日間行うか
-talk_days = 3 
+talk_days = 1
 #5日間の会話パート
 now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 #会話パート開始日
-start_day = "2025-01-10" #仮
-start_day_obj = datetime.datetime.strptime(start_day, "%Y-%m-%d")
+start_day = now #アクセスしている日
 # タイムゾーンを付与
-start_day_obj = pytz.timezone('Asia/Tokyo').localize(start_day_obj)
+#start_day = pytz.timezone('Asia/Tokyo').localize(start_day)
 #今日が会話パート何日目か計算
-now_day = (now - start_day_obj).days + 1
+now_day = (now - start_day).days + 1
 
 
 #Firebaseから有効な参加者IDを取得する関数
@@ -68,7 +67,7 @@ def get_valid_ids():
   
   return valid_ids
 
-valid_ids = get_valid_ids() #有効なユーザーID
+valid_ids = ['あ'] #有効なユーザーID 今は'あ'のみ
 #クエリパラメータからuser_idを取得（あれば）
 query_params = st.experimental_get_query_params()
 if "user_id" in query_params:
@@ -198,8 +197,8 @@ def send_message():
     st.session_state["messages"].append({"role": "Human", "content": input})
     st.session_state["messages"].append({"role": "AI", "content": get_response(input)})
     st.session_state.count += 1
-    #会話が5ターンずつ終わった時
-    if st.session_state.count == 5:
+    #会話が5ターンずつ終わった時ではなく、会話が終わらないようにする
+    if st.session_state.count == -1:
       add_data('users', st.session_state['user_id'], {"messages": {f"day{now_day}": {"messages": st.session_state["messages"]}}})
 
 
@@ -248,19 +247,19 @@ else:
 
 if st.session_state['user_id']:
   #今日の日付が開始日よりも前の場合
-  if now < start_day_obj:
+  if now < start_day:
     #ビッグファイブのアンケートに回答してない場合は認証させてアンケートリンクを表示する
     if prompt_bigfive == {}:
       st.markdown(f'<a href="https://nagoyapsychology.qualtrics.com/jfe/form/SV_4N1LfAYkc9TrY8u?user_id={st.session_state["user_id"]}" target="_blank">こちら</a>をクリックしてアンケートに回答してください。', unsafe_allow_html=True)
     else:
-      st.write(f"会話パートは{start_day_obj.month}月{start_day_obj.day}日15時から開始できます。")
+      st.write(f"会話パートは{start_day.month}月{start_day.day}日15時から開始できます。")
     st.stop()
   #5日間の後の場合
   elif now_day > talk_days:
     st.write(f"{talk_days}日間の会話パートは終了しました。")
     st.stop()
-  #今の時間が午後3時よりも前の場合
-  elif now.hour < 15:
+  #今の時間が午後3時よりも前の場合 今はなし
+  elif now.hour < 0:
     st.write("会話は本日の15時から開始できます。")
     st.stop()
   else:

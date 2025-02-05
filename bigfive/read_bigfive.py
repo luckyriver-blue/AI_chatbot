@@ -14,13 +14,14 @@ bigfive_csv = os.path.join(bigfive_directory, bigfive_csv_name)
 qualtrics_data = pd.read_csv(bigfive_csv)
 
 #すべてのユーザーのデータを処理するためループで回す
-users = ['1', '2', '3', '0116', '0720', '1014']
-for user_id in users:
-  #user_idで該当の行を取り出す
-  user_data = qualtrics_data.loc[qualtrics_data['user_id'] == user_id]
+for index, data in qualtrics_data.iterrows():
+  #最初のヘッダー2行はスキップ
+  if index <= 1:
+    continue
+  user_id = data['user_id']
   #最後の10項目の数字の羅列(ビッグファイブの結果）だけ取得
-  answer = user_data.iloc[:, -10:].apply(pd.to_numeric, errors='coerce')
-  answer_list = answer.values[0].tolist()
+  answer = data.iloc[-10:].apply(pd.to_numeric, errors='coerce')
+  answer_list = answer.tolist()
 
   #ビッグファイブのMEDIUMの範囲を平均 ± 標準偏差として定義する。
   #外向性は7.83±2.97、協調性は9.48±2.16、勤勉性は6.14±2.41、神経症傾向は9.21±2.48、開放性は8.03±2.48
