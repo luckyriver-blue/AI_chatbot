@@ -136,7 +136,7 @@ for user in users:
 
   #結果リストをcsvファイルに出力
   timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-  output_data = result + [timestamp]
+  output_data = user + result + [timestamp]
   pd.DataFrame([output_data]).to_csv(result_file, index=False, header=False, mode="a")   
   print(f"Results saved to {result_file}.") 
   exit()
