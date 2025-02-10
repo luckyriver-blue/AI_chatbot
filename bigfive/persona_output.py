@@ -52,7 +52,8 @@ for user in users:
     omitted_day_data = day_data.popitem() #最後のAIの発言は省く
     conversation_data[day_key]['messages'] = day_data
   
-  description_file = os.path.join(description_directory, f'{int(user)}.txt') #会話内容から抽出したその人の特徴
+  #description = generate_description(conversation_data)
+  description_file = os.path.join(description_directory, f'{user}.txt') #会話内容から抽出したその人の特徴
   with open(description_file, 'r', encoding='utf-8') as description_data:
     description = description_data.read()
   
