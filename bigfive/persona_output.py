@@ -82,7 +82,7 @@ for user in users:
               "role": "system",
               "content": "For the following task, respond in a way that aligns with this description:\n"
                         f"{description}\n\n"
-                        "You must think, and decide exactly as this person would."
+                        "Your response should be in accordance with the description provided above."
             },
             {
               "role": "user",
@@ -116,7 +116,7 @@ for user in users:
               "role": "system",
               "content": "For the following task, respond in a way that matches this BIG FIVE personality questionnaire:\n"
                         f"Extraversion: {extraversion}, Agreeableness: {agreeableness}, Conscientiousness: {conscientiousness}, Neuroticism: {neuroticism}, Openness: {openness}\n\n"
-                        "You must think, and decide exactly as this person would."
+                        "Your response should be in accordance with the description provided above."
             },
             {
               "role": "user",
@@ -153,7 +153,7 @@ for user in users:
                         f"Extraversion: {extraversion}, Agreeableness: {agreeableness}, Conscientiousness: {conscientiousness}, Neuroticism: {neuroticism}, Openness: {openness}\n\n"
                         "Additionally, respond in a way that aligns with this description:\n"
                         f"{description}\n\n"
-                        "You must think, and decide exactly as this person would."
+                        "Your response should be in accordance with the description provided above."
             },
             {
               "role": "user",
@@ -178,4 +178,4 @@ for user in users:
   timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   output_data = [str(user)] + result + [timestamp]
   pd.DataFrame([output_data]).to_csv(result_file, index=False, header=False, mode="a")   
-  print(f"Results saved to {result_file}.") 
+  print(f"Results were saved to {result_file}.") 
