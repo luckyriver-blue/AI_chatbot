@@ -67,7 +67,7 @@ def get_valid_ids():
   
   return valid_ids
 
-valid_ids = ['あ'] #有効なユーザーID 今は'あ'のみ
+valid_ids = [1] #有効なユーザーID 今は'1'のみ
 #クエリパラメータからuser_idを取得（あれば）
 query_params = st.experimental_get_query_params()
 if "user_id" in query_params:
